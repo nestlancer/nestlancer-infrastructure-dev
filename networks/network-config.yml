@@ -1,0 +1,41 @@
+# ═══════════════════════════════════════════════════════════════════
+# NETWORK CONFIGURATION — Dev only (this repository)
+# Subnets and names match create-networks.sh
+# ═══════════════════════════════════════════════════════════════════
+
+gateway:
+  name: gateway_dev_network
+  subnet: "172.20.0.0/24"
+  driver: bridge
+
+service_networks:
+  postgres:
+    name: pg_internal_dev
+    subnet: "172.20.1.0/28"
+    driver: bridge
+    internal: true
+  redis_cache:
+    name: rc_internal_dev
+    subnet: "172.20.2.0/28"
+    driver: bridge
+    internal: true
+  redis_pubsub:
+    name: rp_internal_dev
+    subnet: "172.20.3.0/28"
+    driver: bridge
+    internal: true
+  rabbitmq:
+    name: rmq_internal_dev
+    subnet: "172.20.4.0/28"
+    driver: bridge
+    internal: true
+  mailpit:
+    name: mailpit_internal_dev
+    subnet: "172.20.7.0/28"
+    driver: bridge
+    internal: true
+  minio:
+    name: minio_internal_dev
+    subnet: "172.20.8.0/28"
+    driver: bridge
+    internal: true

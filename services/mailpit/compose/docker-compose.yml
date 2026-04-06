@@ -1,0 +1,32 @@
+# ═══════════════════════════════════════════════════════════════
+# Mailpit — Dev Environment Compose
+# Simplified for dev-specific infrastructure
+# ═══════════════════════════════════════════════════════════════
+name: mailpit-dev
+
+services:
+  mailpit:
+    container_name: mailpit-dev
+    image: axllent/mailpit:latest
+    env_file:
+      - ../env/dev.env
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    networks:
+      mailpit_internal:
+        ipv4_address: 172.20.7.2
+      gateway:
+    labels:
+      com.project.service: "mailpit"
+      com.project.environment: "dev"
+      com.project.managed-by: "docker-compose"
+    restart: unless-stopped
+
+networks:
+  mailpit_internal:
+    name: mailpit_internal_dev
+    external: true
+  gateway:
+    name: gateway_dev_network
+    external: true

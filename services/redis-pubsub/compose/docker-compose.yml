@@ -1,0 +1,47 @@
+# ═══════════════════════════════════════════════════════════════
+# Redis Pub/Sub — Dev Environment Compose
+# Simplified for dev-specific infrastructure
+# ═══════════════════════════════════════════════════════════════
+name: rp-dev
+
+services:
+  redis-pubsub:
+    container_name: redis-pubsub-dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    env_file:
+      - ../env/dev.env
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    volumes:
+      - ${DATA_PATH_BASE}/rp_data:/data
+      - ../config/base/redis.conf:/etc/redis/base.conf:ro
+      - ../config/dev/redis.conf:/etc/redis/override.conf:ro
+      - ../scripts/healthcheck.sh:/usr/local/bin/healthcheck.sh:ro
+    entrypoint: ["/usr/local/bin/custom-entrypoint.sh"]
+    environment:
+      - APP_ENV=dev
+    healthcheck:
+      test: ["CMD-SHELL", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    labels:
+      com.project.service: "redis-pubsub"
+      com.project.environment: "dev"
+      com.project.isolation-domain: "rp-dev"
+      com.project.managed-by: "docker-compose"
+    networks:
+      - rp_internal
+      - gateway
+
+networks:
+  rp_internal:
+    name: rp_internal_dev
+    external: true
+  gateway:
+    name: gateway_dev_network
+    external: true

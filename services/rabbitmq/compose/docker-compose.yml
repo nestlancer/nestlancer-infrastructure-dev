@@ -1,0 +1,49 @@
+# ═══════════════════════════════════════════════════════════════
+# RabbitMQ — Dev Environment Compose
+# Simplified for dev-specific infrastructure
+# ═══════════════════════════════════════════════════════════════
+name: rmq-dev
+
+services:
+  rabbitmq:
+    container_name: rabbitmq-dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    env_file:
+      - ../env/dev.env
+    restart: unless-stopped
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+      - "15692:15692" # Prometheus metrics
+    volumes:
+      - ${DATA_PATH_BASE}/rmq_data:/var/lib/rabbitmq
+      - ${DATA_PATH_BASE}/rmq_backups:/var/lib/rabbitmq/backups
+      - ../scripts:/usr/local/bin/scripts:ro
+      - ../config/base/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ../config/base/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ../config/base/definitions.json.template:/etc/rabbitmq/definitions.json.template:ro
+      - ../config/dev/rabbitmq.conf:/etc/rabbitmq/conf.d/10-override.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    labels:
+      com.project.service: "rabbitmq"
+      com.project.environment: "dev"
+      com.project.isolation-domain: "rmq-dev"
+      com.project.managed-by: "docker-compose"
+    networks:
+      - rmq_internal
+      - gateway
+
+networks:
+  rmq_internal:
+    name: rmq_internal_dev
+    external: true
+  gateway:
+    name: gateway_dev_network
+    external: true

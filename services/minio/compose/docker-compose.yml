@@ -1,0 +1,43 @@
+# ═══════════════════════════════════════════════════════════════
+# MinIO — Dev Environment Compose
+# Simplified for dev-specific infrastructure
+# ═══════════════════════════════════════════════════════════════
+name: minio-dev
+
+services:
+  minio:
+    container_name: minio-dev
+    image: quay.io/minio/minio:latest
+    env_file:
+      - ../env/dev.env
+    ports:
+      - "9000:9000" # API
+      - "9001:9001" # Console
+    volumes:
+      - ${DATA_PATH_BASE}/minio_data:/data
+      - ../init/setup.sh:/setup.sh:ro
+      - ../scripts/custom-entrypoint.sh:/usr/local/bin/custom-entrypoint.sh:ro
+    entrypoint: ["/bin/sh", "/usr/local/bin/custom-entrypoint.sh"]
+    command: ["server", "/data", "--console-address", ":9001"]
+    networks:
+      minio_internal:
+        ipv4_address: 172.20.8.2
+      gateway:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    labels:
+      com.project.service: "minio"
+      com.project.environment: "dev"
+      com.project.managed-by: "docker-compose"
+    restart: unless-stopped
+
+networks:
+  minio_internal:
+    name: minio_internal_dev
+    external: true
+  gateway:
+    name: gateway_dev_network
+    external: true
