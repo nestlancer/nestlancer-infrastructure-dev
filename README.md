@@ -85,16 +85,16 @@ Single Docker host: **seven** containers on **`172.20.x.x`**, attached to **`gat
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         DEVELOPMENT DOCKER HOST                              │
+│                         DEVELOPMENT DOCKER HOST                             │
 │                                                                             │
-│   ┌─── DEV (172.20.x.x) ───────────────────────────────────────────────────┐ │
-│   │  postgres-dev / postgres-replica-dev    redis-cache-dev              │ │
-│   │  redis-pubsub-dev    rabbitmq-dev        mailpit-dev    minio-dev      │ │
-│   │  Gateway: gateway_dev_network  +  per-service internal networks         │ │
-│   │  Host ports: YES — localhost (PostgreSQL, Redis, RMQ, Mailpit, MinIO)  │ │
-│   └─────────────────────────────────────────────────────────────────────────┘ │
+│   ┌─── DEV (172.20.x.x) ───────────────────────────────────────────────────┐│
+│   │  postgres-dev / postgres-replica-dev    redis-cache-dev                │|
+│   │  redis-pubsub-dev    rabbitmq-dev        mailpit-dev    minio-dev      ││
+│   │  Gateway: gateway_dev_network  +  per-service internal networks        ││
+│   │  Host ports: YES — localhost (PostgreSQL, Redis, RMQ, Mailpit, MinIO)  ││
+│   └────────────────────────────────────────────────────────────────────────┘│
 │                                                                             │
-│   Data root (typical): /root/Desktop/docker-infra-data/dev/<service>/        │
+│   Data root (typical): /root/Desktop/docker-infra-data/dev/<service>/       │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -441,7 +441,5 @@ docker exec -it postgres-dev psql -U nl_infra_admin -d nl_platform_dev
 <div align="center">
 
 **Development Docker stack for Nestlancer**
-
-<sub>Structure aligned with <code>nestlancer-infrastructure-prod/README.md</code>; header style inspired by <a href="https://github.com/nestlancer/nestlancer-armory/blob/5368e09b73fc59d59bb6f5c03aa429bf15406077/monitoring/nest-sentinel/readme.md">Nest Sentinel</a>.</sub>
 
 </div>
