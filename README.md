@@ -6,7 +6,7 @@
 
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 [![Linux](https://img.shields.io/badge/Host-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://kernel.org/)
-[![Architecture](https://img.shields.io/badge/Spec-architecture--dev.md-3498DB?style=for-the-badge)](./architecture-dev.md)
+
 
 <br/>
 
@@ -62,7 +62,7 @@
 
 # 1. Overview & setup
 
-> **Scope:** This repository defines **one** environment: **local development**. Services publish **host ports** for convenient access from your workstation. There is no production override compose, Tailscale automation, or cloud backup wiring in-tree. Full port maps, volumes, and workflows: **[architecture-dev.md](./architecture-dev.md)**.
+> **Scope:** This repository defines **one** environment: **local development**. Services publish **host ports** for convenient access from your workstation. There is no production override compose, Tailscale automation, or cloud backup wiring in-tree.
 
 ---
 
@@ -118,7 +118,7 @@ Single Docker host: **seven** containers on **`172.20.x.x`**, attached to **`gat
 ```
 nestlancer-infrastructure-dev/
 ├── Makefile                    ← Root interface (dev only)
-├── architecture-dev.md         ← Full system specification
+
 ├── README.md                   ← This document
 ├── networks/
 │   ├── create-networks.sh
@@ -160,7 +160,7 @@ make env-up
 make env-status
 ```
 
-**Examples** after the stack is healthy (see [architecture-dev.md](./architecture-dev.md) for exact users and default passwords):
+**Examples** after the stack is healthy:
 
 ```bash
 psql -h localhost -p 5432 -U nl_platform_app -d nl_platform_dev
@@ -290,7 +290,7 @@ There is **no** bundled `backup-all.sh` or `rclone` workflow in this repo; keep 
 | **Health JSON** | `docker inspect --format='{{json .State.Health}}' postgres-dev \| jq` |
 | **Run healthcheck** | `docker exec postgres-dev /usr/local/bin/healthcheck.sh` |
 
-RabbitMQ exposes Prometheus metrics on **localhost:15692** (see [architecture-dev.md](./architecture-dev.md) §3).
+RabbitMQ exposes Prometheus metrics on **localhost:15692**.
 
 ---
 
@@ -298,7 +298,7 @@ RabbitMQ exposes Prometheus metrics on **localhost:15692** (see [architecture-de
 
 All service ports are bound for **local development** — prefer `127.0.0.1` / `localhost` in connection strings and UIs.
 
-Persistent data (default layout from **[architecture-dev.md](./architecture-dev.md)** §5):
+Persistent data (default layout):
 
 ```
 /root/Desktop/docker-infra-data/dev/{postgres,redis-cache,redis-pubsub,rabbitmq,minio}/…
@@ -433,14 +433,14 @@ docker exec -it postgres-dev psql -U nl_infra_admin -d nl_platform_dev
 
 | Document | Contents |
 |:---------|:---------|
-| **[architecture-dev.md](./architecture-dev.md)** | Full topology, credentials reference, volume map, health intervals, mermaid diagram |
+
 | **`services/*/README.md`** | Service-specific notes where present |
 
 ---
 
 <div align="center">
 
-**Development Docker stack for Nestlancer** · Spec: **[architecture-dev.md](./architecture-dev.md)**
+**Development Docker stack for Nestlancer**
 
 <sub>Structure aligned with <code>nestlancer-infrastructure-prod/README.md</code>; header style inspired by <a href="https://github.com/nestlancer/nestlancer-armory/blob/5368e09b73fc59d59bb6f5c03aa429bf15406077/monitoring/nest-sentinel/readme.md">Nest Sentinel</a>.</sub>
 
