@@ -1,6 +1,47 @@
-# Redis Cache Service Unit
+<div align="center">
 
-Self-contained Redis cache service with RDB+AOF persistence for local development.
+# Redis Cache Service Unit — Development
+
+### High-performance cache · local development · 172.20.2.x network
+
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![Linux](https://img.shields.io/badge/Host-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://kernel.org/)
+
+<br/>
+
+**Local-dev ready:** Self-contained Redis cache service with RDB+AOF persistence for local development.
+
+<br/>
+
+[Quick Start](#quick-start) •
+[Targets](#makefile-targets) •
+[Config](#configuration) •
+[Troubleshooting](#troubleshooting)
+
+<br/>
+
+---
+
+</div>
+
+<br/>
+
+## Table of contents
+
+<details>
+<summary><b>Expand full outline</b></summary>
+
+- [Quick Start](#quick-start)
+- [Prerequisites](#prerequisites)
+- [Makefile Targets](#makefile-targets)
+- [Configuration](#configuration)
+- [Port Mapping (dev)](#port-mapping-dev)
+- [Troubleshooting](#troubleshooting)
+- [Readiness](#readiness)
+
+</details>
+
+---
 
 ## Quick Start
 

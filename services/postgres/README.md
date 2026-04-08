@@ -1,6 +1,49 @@
-# PostgreSQL Service Unit
+<div align="center">
 
-Self-contained PostgreSQL (primary + optional read replica) for local development, with base + dev config merging and init scripts.
+# PostgreSQL Service Unit — Development
+
+### Primary + Replica · local development · 172.20.1.x network
+
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![Linux](https://img.shields.io/badge/Host-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://kernel.org/)
+
+<br/>
+
+**Local-dev ready:** Self-contained PostgreSQL (primary + optional read replica) for local development, with base + dev config merging and init scripts.
+
+<br/>
+
+[Quick Start](#quick-start) •
+[Architecture](#architecture) •
+[Targets](#makefile-targets) •
+[Roles](#roles-created-on-first-init) •
+[Backups](#backup--restore)
+
+<br/>
+
+---
+
+</div>
+
+<br/>
+
+## Table of contents
+
+<details>
+<summary><b>Expand full outline</b></summary>
+
+- [Quick Start](#quick-start)
+- [Architecture](#architecture)
+- [Makefile Targets](#makefile-targets)
+- [Roles (created on first init)](#roles-created-on-first-init)
+- [Changing variables after first init](#changing-variables-after-first-init)
+- [Read replication (dev)](#read-replication-dev)
+- [Backup & Restore](#backup--restore)
+- [Layout](#layout)
+
+</details>
+
+---
 
 ## Quick Start
 

@@ -1,6 +1,44 @@
-# RabbitMQ Service Unit
+<div align="center">
 
-RabbitMQ with Management and Prometheus plugins for local development.
+# RabbitMQ Service Unit — Development
+
+### Message broker · local development · 172.20.4.x network
+
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![Linux](https://img.shields.io/badge/Host-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://kernel.org/)
+
+<br/>
+
+**Local-dev ready:** RabbitMQ with Management and Prometheus plugins for local development.
+
+<br/>
+
+[Quick Start](#quick-start) •
+[Management UI](#management-ui) •
+[Targets](#makefile-targets) •
+[Ports](#ports-dev)
+
+<br/>
+
+---
+
+</div>
+
+<br/>
+
+## Table of contents
+
+<details>
+<summary><b>Expand full outline</b></summary>
+
+- [Quick Start](#quick-start)
+- [Management UI](#management-ui)
+- [Makefile Targets](#makefile-targets)
+- [Ports (dev)](#ports-dev)
+
+</details>
+
+---
 
 ## Quick Start
 
