@@ -7,16 +7,29 @@ name: mailpit-dev
 services:
   mailpit:
     container_name: mailpit-dev
-    image: axllent/mailpit:latest
+    image: axllent/mailpit:v1.29.6
     env_file:
       - ../env/dev.env
+    environment:
+      - MP_UI_AUTH=${MAILPIT_UI_USER}:${MAILPIT_UI_PASS}
     ports:
       - "1025:1025" # SMTP
       - "8025:8025" # Web UI
+    volumes:
+      - ${DATA_PATH_BASE}:/data
     networks:
       mailpit_internal:
         ipv4_address: 172.20.7.2
       gateway:
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 1025 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 256M
     labels:
       com.project.service: "mailpit"
       com.project.environment: "dev"

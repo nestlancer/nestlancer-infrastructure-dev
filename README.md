@@ -165,9 +165,9 @@ make env-status
 ```bash
 psql -h localhost -p 5432 -U nl_platform_app -d nl_platform_dev
 redis-cli -h localhost -p 6379 -a "$REDIS_PASSWORD"
-open http://localhost:15672   # RabbitMQ management
-open http://localhost:8025    # Mailpit
-open http://localhost:9001    # MinIO console
+open http://localhost:15672           # RabbitMQ management
+open http://admin:pass@localhost:8025 # Mailpit (Authed)
+open http://localhost:9001           # MinIO console
 ```
 
 ---
@@ -301,7 +301,7 @@ All service ports are bound for **local development** — prefer `127.0.0.1` / `
 Persistent data (default layout):
 
 ```
-/root/Desktop/docker-infra-data/dev/{postgres,redis-cache,redis-pubsub,rabbitmq,minio}/…
+/root/Desktop/docker-infra-data/dev/{postgres,redis-cache,redis-pubsub,rabbitmq,mailpit,minio}/…
 ```
 
 Adjust host paths in each service’s `docker-compose.yml` if your data root differs.
@@ -357,7 +357,7 @@ Other services use internal networks without fixed `ipv4_address` in compose; co
 | RabbitMQ management | `15672 → 15672` |
 | RabbitMQ Prometheus | `15692 → 15692` |
 | Mailpit SMTP | `1025 → 1025` |
-| Mailpit Web UI | `8025 → 8025` |
+| Mailpit Web UI | `8025 → 8025` (Auth Required) |
 | MinIO API | `9000 → 9000` |
 | MinIO Console | `9001 → 9001` |
 

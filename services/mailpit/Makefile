@@ -5,6 +5,7 @@
 .PHONY: help up down restart logs status build clean
 
 export APP_ENV := dev
+export DATA_PATH_BASE := /root/Desktop/docker-infra-data/dev/mailpit
 
 # ── Derived variables ──
 COMPOSE_FILE     := compose/docker-compose.yml
