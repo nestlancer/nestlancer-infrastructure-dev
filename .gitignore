@@ -16,6 +16,7 @@ services/postgres/backups/*
 *.crt
 *.p12
 *.jks
+services/**/env/*.env
 
 # Editor files
 *.swp
