@@ -10,6 +10,9 @@ services:
     image: quay.io/minio/minio:RELEASE.2025-02-28T09-55-16Z
     env_file:
       - ../env/dev.env
+    environment:
+      # Constrained mode: lower pre-allocated cache vs default ~1GiB behavior
+      - MINIO_CI_CD=1
     ports:
       - "9000:9000" # API
       - "9001:9001" # Console
@@ -33,12 +36,12 @@ services:
     restart: unless-stopped
     deploy:
       resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
         reservations:
           cpus: "0.25"
           memory: 256M
+        limits:
+          cpus: "0.5"
+          memory: 512M
 
   minio-init:
     container_name: minio-init-dev

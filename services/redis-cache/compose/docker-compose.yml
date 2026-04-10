@@ -29,6 +29,14 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.2"
+          memory: 128M
+        limits:
+          cpus: "0.5"
+          memory: 256M
     labels:
       com.project.service: "redis-cache"
       com.project.environment: "dev"

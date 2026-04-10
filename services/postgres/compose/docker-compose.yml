@@ -32,6 +32,14 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+        limits:
+          cpus: "1.0"
+          memory: 1G
     labels:
       com.project.service: "postgres"
       com.project.environment: "dev"
@@ -41,7 +49,8 @@ services:
       pg_internal:
         ipv4_address: 172.20.1.2
       gateway:
-    shm_size: 1gb
+    # Keep below memory limit (cgroup accounting includes /dev/shm)
+    shm_size: 512mb
  
   postgres-replica:
     container_name: postgres-replica-dev
@@ -69,6 +78,14 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+        limits:
+          cpus: "1.0"
+          memory: 1G
     labels:
       com.project.service: "postgres-replica"
       com.project.environment: "dev"
@@ -78,7 +95,7 @@ services:
       pg_internal:
         ipv4_address: 172.20.1.3
       gateway:
-    shm_size: 1gb
+    shm_size: 512mb
     depends_on:
       postgres:
         condition: service_healthy
