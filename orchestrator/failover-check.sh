@@ -26,6 +26,22 @@ check_container_health() {
     [[ "$state" == "running" ]]
 }
 
+wait_for_running() {
+    local container="$1"
+    local timeout_seconds="${2:-30}"
+    local elapsed=0
+
+    while (( elapsed < timeout_seconds )); do
+        if check_container_health "$container"; then
+            return 0
+        fi
+        sleep 1
+        elapsed=$((elapsed + 1))
+    done
+
+    return 1
+}
+
 echo "╔═══════════════════════════════════════════════════════╗"
 echo "║   DEV STACK RESILIENCE CHECK                          ║"
 echo "╚═══════════════════════════════════════════════════════╝"
@@ -66,7 +82,9 @@ for i in "${!SERVICES[@]}"; do
 
     # Restart the stopped service
     docker start "$CONTAINER" >/dev/null 2>&1 || true
-    sleep 3
+    if ! wait_for_running "$CONTAINER" 30; then
+        echo "  ⚠️  WARN — $CONTAINER did not return to running state within 30s"
+    fi
     echo ""
 done
 
