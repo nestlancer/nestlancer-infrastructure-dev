@@ -438,6 +438,40 @@ docker exec -it postgres-dev psql -U nl_infra_admin -d nl_platform_dev
 
 ---
 
+## Final verification runbook (dev)
+
+Use this exact sequence for a final pre-handover validation.
+
+```bash
+cd nestlancer-infrastructure-dev
+
+# 1) Start environment
+make networks-create
+make env-up
+make env-status
+
+# 2) Service smoke checks
+docker exec postgres-dev psql -U nl_infra_admin -d nl_platform_dev -c "SELECT 1;"
+docker exec redis-cache-dev redis-cli -a "$(docker exec redis-cache-dev printenv REDIS_PASSWORD)" ping
+docker exec redis-pubsub-dev redis-cli -a "$(docker exec redis-pubsub-dev printenv REDIS_PASSWORD)" ping
+docker exec rabbitmq-dev rabbitmq-diagnostics -q ping
+curl -fsS -u "admin:nestlancer-mail-secure" "http://localhost:8025/api/v1/info"
+curl -fsS "http://localhost:9000/minio/health/live"
+
+# 3) Teardown and confirm clean stop
+make env-down
+make env-status
+docker ps --filter "name=dev"
+```
+
+Expected result:
+
+- `make env-status` shows all containers `run` + `ok` after startup
+- smoke checks return success (`PONG`, SQL row, HTTP 200)
+- final `make env-status` shows `none` for all dev containers
+
+---
+
 <div align="center">
 
 **Development Docker stack for Nestlancer**
